@@ -163,11 +163,6 @@ class TelaSudoku:
         self.__celula_selecionada = (linha, coluna)
         print(self.__celula_selecionada)
 
-    def apagar_celula(self):
-        linha, coluna = self.__celula_selecionada
-        if self.__celulas[linha][coluna].valor == 0:
-            self.__celulas[linha][coluna].num_esboco = 0
-
     def clique(self, posicao):
         if posicao[0] < self.__largura and posicao[1] < self.__altura:
             tamanho_celula = self.__largura / 9

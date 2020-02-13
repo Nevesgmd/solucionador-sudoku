@@ -9,7 +9,6 @@ class ControladorSudoku:
         from limite.tela_sudoku import TelaSudoku
         janela = pygame.display.set_mode((540, 600))
         self.__sudoku = Sudoku()
-        self.criar_jogo()
         self.__tela_sudoku = TelaSudoku(self, 540, 540, janela)
 
     def encontrar_vazio(self):
@@ -71,22 +70,6 @@ class ControladorSudoku:
 
         return True
 
-    """
-    def inserir_numero(self, numero: int):
-        linha, coluna = self.__tela_sudoku.celula_selecionada
-        if self.__sudoku.tabuleiro[linha][coluna] == 0:
-            self.__tela_sudoku.celulas[linha][coluna].valor(numero)
-            self.atualiza_jogo()
-
-            if self.eh_valido(numero, (linha, coluna)) and self.solucionar():
-                return True
-            else:
-                self.__tela_sudoku.celulas[linha][coluna].valor(0)
-                self.__tela_sudoku.celulas[linha][coluna].num_esboco(0)
-                self.atualiza_jogo()
-                return False
-    """
-
     def tudo_prenchido(self):
         for linha in range(9):
             for coluna in range(9):
@@ -130,9 +113,13 @@ class ControladorSudoku:
                         key = 8
                     if evento.key == pygame.K_9:
                         key = 9
-                    if evento.key == pygame.K_DELETE:
-                        self.__tela_sudoku.apagar_celula()
-                        key = None
+
+                    if evento.key == pygame.K_c:
+                        self.criar_jogo()
+                        self.__tela_sudoku.celulas = [[self.__tela_sudoku.Celulas
+                                                       (self.__sudoku.tabuleiro[linha][coluna], linha,
+                                                        coluna, 540, 540)
+                                                      for coluna in range(9)] for linha in range(9)]
 
                     if evento.key == pygame.K_SPACE:
                         self.__tela_sudoku.mostrar_solucao()
