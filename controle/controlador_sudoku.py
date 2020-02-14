@@ -12,6 +12,7 @@ class ControladorSudoku:
         self.__tela_sudoku = TelaSudoku(self, 540, 540, janela)
 
     def encontrar_vazio(self):
+        """Encontra o primeiro valor vazio do tabuleiro da esquerda pra direita, de cima para baixo."""
         for linha in range(len(self.__sudoku.tabuleiro)):
             for coluna in range(len(self.__sudoku.tabuleiro[linha])):
                 if self.__sudoku.tabuleiro[linha][coluna] == 0:
@@ -20,6 +21,12 @@ class ControladorSudoku:
         return None
 
     def eh_valido(self, num_inserido: int, posicao: tuple):
+        """
+        Verifica a validez de um número em determinada posição
+        :param num_inserido: número a ser verificado
+        :param posicao: posição do número no tabuleiro
+        :return: bool
+        """
         # Verificando se existe um número igual ao inserido na linha
         for coluna in range(len(self.__sudoku.tabuleiro)):
             if self.__sudoku.tabuleiro[posicao[0]][coluna] == num_inserido and posicao[1] != coluna:
@@ -42,6 +49,7 @@ class ControladorSudoku:
         return True
 
     def solucionar(self):
+        """Soluciona o tabuleiro utilizando backtracking"""
         pos_vazia = self.encontrar_vazio()
         if pos_vazia:
             linha, coluna = pos_vazia
@@ -60,17 +68,22 @@ class ControladorSudoku:
         return False
 
     def criar_jogo(self):
+        """
+        Cria um jogo completo e aleatoriamente zera algumas posições para que possa ser jogado
+        """
         self.solucionar()
         for c in range(70):
             linha = randint(0, 8)
             coluna = randint(0, 8)
             self.__sudoku.tabuleiro[linha][coluna] = 0
 
-        print(self.__sudoku.tabuleiro)
-
         return True
 
     def tudo_prenchido(self):
+        """
+        Verifica se todo o tabuleiro foi preenchido
+        :return: bool
+        """
         for linha in range(9):
             for coluna in range(9):
                 if self.__sudoku.tabuleiro[linha][coluna] == 0:
@@ -78,10 +91,13 @@ class ControladorSudoku:
         return True
 
     def atualiza_jogo(self):
+        """Atualiza o tabuleiro de acordo com o preenchimento das células"""
         self.__sudoku.tabuleiro = [[self.__tela_sudoku.celulas[linha][coluna].valor
                                     for coluna in range(9)] for linha in range(9)]
 
     def iniciar(self):
+        """Inicia o jogo"""
+
         pygame.display.set_caption("Sudoku")
         key = None
         rodando = True
@@ -152,6 +168,11 @@ class ControladorSudoku:
 
     @staticmethod
     def formatar_tempo(segundos):
+        """
+        Cria uma string com minutos e segundos
+        :param segundos: segundos que devem ser utilizados para criar a string
+        :return: str
+        """
         segundo = segundos % 60
         minuto = segundos // 60
 

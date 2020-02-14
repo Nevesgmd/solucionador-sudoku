@@ -16,6 +16,7 @@ class TelaSudoku:
             self.__selecionado = False
 
         def desenhar(self, janela):
+            """Realiza as animações de inserir número, esboçar número e selecionar célula"""
             fonte = pygame.font.SysFont("comicsans", 40)
 
             tamanho_celula = self.__largura / 9
@@ -34,6 +35,7 @@ class TelaSudoku:
                 pygame.draw.rect(janela, (255, 0, 0), (x, y, tamanho_celula, tamanho_celula), 3)
 
         def desenhar_mudanca(self, janela, g=True):
+            """Altera o valor da célula na interface gráfica"""
             fonte = pygame.font.SysFont("comicsans", 40)
 
             tamanho_celula = self.__largura / 9
@@ -118,7 +120,9 @@ class TelaSudoku:
         self.__celula_selecionada = None
 
     def desenhar(self):
-        # Draw Grid Lines
+        """Cria a interface gráfica do tabuleiro"""
+
+        # Desenha as linhas da grade
         tamanho_celula = self.__largura / 9
         for i in range(10):
             if i % 3 == 0 and i != 0:
@@ -130,12 +134,17 @@ class TelaSudoku:
             pygame.draw.line(self.__janela, (0, 0, 0), (i * tamanho_celula, 0),
                              (i * tamanho_celula, self.__altura), grossura)
 
-        # Draw Cubes
+        # Desenha as células
         for linha in range(9):
             for coluna in range(9):
                 self.__celulas[linha][coluna].desenhar(self.__janela)
 
     def inserir_num(self, valor):
+        """
+        Insere número na célula selecionada caso seja válido
+        :param valor: número a ser inserido
+        :return: bool
+        """
         linha, coluna = self.__celula_selecionada
         if self.__celulas[linha][coluna].valor == 0:
             self.__celulas[linha][coluna].valor = valor
@@ -150,29 +159,37 @@ class TelaSudoku:
                 return False
 
     def esbocar(self, valor):
+        """Esboça um valor na célula"""
         linha, coluna = self.__celula_selecionada
         self.__celulas[linha][coluna].num_esboco = valor
 
     def selecionar(self, linha, coluna):
-        # Reset all other
+        """Seleciona uma célula"""
+
+        # Reseta qualquer seleção
         for i in range(9):
             for j in range(9):
                 self.__celulas[i][j].selecionado = False
 
         self.__celulas[linha][coluna].selecionado = True
         self.__celula_selecionada = (linha, coluna)
-        print(self.__celula_selecionada)
 
     def clique(self, posicao):
+        """
+        Encontra a linha e a coluna através da posição do clique do mouse
+        :param posicao: posição do clique em pixels
+        :return: tuple, (linha, coluna)
+        """
         if posicao[0] < self.__largura and posicao[1] < self.__altura:
             tamanho_celula = self.__largura / 9
-            x = posicao[0] // tamanho_celula
-            y = posicao[1] // tamanho_celula
-            return int(y), int(x)
+            linha = posicao[1] // tamanho_celula
+            coluna = posicao[0] // tamanho_celula
+            return int(linha), int(coluna)
         else:
             return None
 
     def mostrar_solucao(self):
+        """Mostra a solução na interface"""
         self.__controlador.solucionar()
         for linha in range(len(self.__controlador.sudoku.tabuleiro)):
             for coluna in range(len(self.__controlador.sudoku.tabuleiro[linha])):
@@ -183,14 +200,14 @@ class TelaSudoku:
 
     def redesenhar_tela(self, tempo, erros):
         self.janela.fill((255, 255, 255))
-        # Draw time
+        # Desenha o tempo
         fonte = pygame.font.SysFont("comicsans", 40)
         texto_tempo = fonte.render("Time: " + self.__controlador.formatar_tempo(tempo), 1, (0, 0, 0))
         self.__janela.blit(texto_tempo, (540 - 160, 560))
-        # Draw Strikes
+        # Desenha os erros
         texto_erros = fonte.render("X " * erros, 1, (255, 0, 0))
         self.__janela.blit(texto_erros, (20, 560))
-        # Draw grid and board
+        # Desenha o tabuleiro
         self.desenhar()
 
     @property
