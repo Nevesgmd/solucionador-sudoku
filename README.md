@@ -17,16 +17,14 @@ Sudoku é um jogo cujo objetivo é a colocação de números de 1 a 9 em cada um
 
 <a name="howto"></a>
 ## Como Iniciar o Projeto em Sua Máquina
-Após clonar todos os arquivos deste repositório e entender sua estrutura ([Programação Orientada a Objetos, MVC](https://www.devmedia.com.br/introducao-ao-padrao-mvc/29308)), certifique-se que o `pygame` esteja instalado e entenda como testar o programa:
-
-### Testando o programa
 Para testar o programa, siga os seguintes passos:
 
-1. Rode o arquivo 'jogo_sudoku.py' do diretório utilizando o terminal (macOS/Linux) ou cmd (Windows) com a linha `python3 jogo_sudoku.py`.
-2. O jogo abrirá um tabuleiro de sudoku vazio para ser preenchido com o tabuleiro que você está querendo resolver.
-3. Para inserir um número basta selecionar uma célula vazia, clicar no número desejado e teclar Enter.
+1. Instale a biblioteca `Pygame` utilizando o terminal (macOS/Linux) ou cmd (Windows) com o seguinte comando: `pip install pygame`
+2. Rode o arquivo 'jogo_sudoku.py' do diretório do projeto utilizando o terminal ou cmd com a linha `python3 jogo_sudoku.py`.
+3. O jogo abrirá um tabuleiro de sudoku vazio para ser preenchido com o tabuleiro que você está querendo resolver.
+4. Para inserir um número basta selecionar uma célula vazia, clicar no número desejado e teclar Enter.
 Caso você queira um jogo teste para checar se tudo está funcionando tecle a letra `c` que um tabuleiro será gerado para você (ao inserir um número em uma posição inválida será adicionado um erro no canto inferior esquerdo da tela).
-4. Quando desejar a solução, basta teclar a barra de espaço.
+5. Quando desejar a solução, basta teclar a barra de espaço.
 
 <a name="backtracking"></a>
 ## Método de Solução
